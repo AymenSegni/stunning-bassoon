@@ -1,0 +1,16 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: canary
+spec:
+  release:
+    revisions: ["canary-xnvvq", "canary-dwf4g"] # [current, candidate]
+    rolloutPercent: 20                          # 20% to green revision
+    configuration:
+      revisionTemplate:
+        spec:
+          container:
+            image: gcr.io/knative-samples/knative-route-demo:green
+            env:
+            - name: T_VERSION
+              value: "green"                                                                                                                              
